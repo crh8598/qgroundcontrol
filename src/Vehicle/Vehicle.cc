@@ -735,6 +735,9 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_OBSTACLE_DISTANCE:
         _handleObstacleDistance(message);
         break;
+    case MAVLINK_MSG_ID_PRI_BAT_INFO:
+        _handlePriBatInfo(message);
+        break;
 
     case MAVLINK_MSG_ID_SERIAL_CONTROL:
     {
@@ -3867,4 +3870,10 @@ void Vehicle::triggerSimpleCamera()
                    true,                        // show errors
                    0.0, 0.0, 0.0, 0.0,          // param 1-4 unused
                    1.0);                        // trigger camera
+}
+
+void Vehicle::_handlePriBatInfo(const mavlink_message_t& message)
+{
+    mavlink_pri_bat_info_t o;
+    mavlink_msg_pri_bat_info_decode(&message,&o);
 }
